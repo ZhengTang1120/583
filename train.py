@@ -2,11 +2,12 @@ import random
 from utils import *
 from model import *
 import time
+import pickle
 
 if __name__ == '__main__':
     random.seed(1)
     start = time.time()
-    lang, train_set = prepare_jldata("snli_1.0/snli_1.0_train.jsonl")
+    lang, train_set = prepare_jldata("snli_1.0/snli_1.0_dev.jsonl")
     lang, dev_set = prepare_jldata("snli_1.0/snli_1.0_dev.jsonl", lang)
     embeds = load_embeddings("glove.6B.200d.txt", lang.words)
     classifier = Classifier(200, embeds, len(lang.words), 100, 48, 4)
@@ -47,5 +48,8 @@ if __name__ == '__main__':
             res = np.array([pls[i]==gls[i] for i in range(len(pls))])
             acc = float(np.sum(res)/len(gls))
             print ("Accuracy: %2f"%acc)
+            with open('model%d.pickle'%e, 'wb') as f:
+                pickle.dump(params, f)
+            torch.save(classifier, "model%d.torch"%e)
             classifier.train()
             start = time.time()
