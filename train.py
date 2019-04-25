@@ -14,7 +14,7 @@ if __name__ == '__main__':
     optimizer = optim.SGD(classifier.parameters(), lr=0.1)
     done = time.time()
     elapsed = done - start
-    print("Data Prepared, Time Used: %2f"%(e, elapsed), end=' ')
+    print("Data Prepared, Time Used: %2f"%elapsed)
     print ("training...")
     for e in range(100):
         for i, datapoint in enumerate(train_set):
