@@ -6,12 +6,15 @@ import time
 if __name__ == '__main__':
     random.seed(1)
     start = time.time()
-    lang, train_set = prepare_jldata("snli_1.0/snli_1.0_dev.jsonl")
+    lang, train_set = prepare_jldata("snli_1.0/snli_1.0_train.jsonl")
     lang, dev_set = prepare_jldata("snli_1.0/snli_1.0_dev.jsonl", lang)
     embeds = load_embeddings("glove.6B.200d.txt", lang.words)
     classifier = Classifier(200, embeds, len(lang.words), 100, 48, 4)
     loss_function = nn.NLLLoss()
     optimizer = optim.SGD(classifier.parameters(), lr=0.1)
+    done = time.time()
+    elapsed = done - start
+    print("Data Prepared, Time Used: %2f"%(e, elapsed), end=' ')
     print ("training...")
     for e in range(100):
         for i, datapoint in enumerate(train_set):
@@ -28,6 +31,9 @@ if __name__ == '__main__':
             optimizer.step()
 
         if e % 10 == 0:
+            done = time.time()
+            elapsed = done - start
+            print("Epoch %d: Time Used: %2f"%(e, elapsed), end=' ')
             classifier.eval()
             gls = list()
             pls = list()
@@ -40,8 +46,6 @@ if __name__ == '__main__':
                 pls.append(predict)
             res = np.array([pls[i]==gls[i] for i in range(len(pls))])
             acc = float(np.sum(res)/len(gls))
-            done = time.time()
-            elapsed = done - start
-            print("Epoch %d: used time: %d"%(e, elapsed))
-            start = time.time()
+            print ("Accuracy: %2f"%acc)
             classifier.train()
+            start = time.time()

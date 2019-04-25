@@ -10,7 +10,7 @@ class LSTMEncoder(nn.Module):
     def __init__(self, embedding_dim, embeddings, vocab_size, hidden_dim):
         super(LSTMEncoder, self).__init__()
         self.hidden_dim = hidden_dim
-        if embeddings:
+        if embeddings is not None:
             self.word_embeddings = nn.Embedding.from_pretrained(torch.FloatTensor(embeddings))
         else:
             self.word_embeddings = nn.Embedding(vocab_size, embedding_dim)
