@@ -22,7 +22,7 @@ class LSTMClassifier:
         self.model = dy.Model()
         self.trainer = dy.AdamTrainer(self.model)
         # print(self.trainer.learning_rate)
-        if embeds:
+        if np.any(embeds):
             self.word_embeddings = self.model.lookup_parameters_from_numpy(self.embeds)
         else:
             self.word_embeddings = self.model.add_lookup_parameters((self.vocab_size, self.embeds_dim))
