@@ -4,6 +4,9 @@ import re
 import numpy as np
 import math
 
+import nltk
+nltk.download('wordnet')
+
 from nltk.stem import PorterStemmer 
 from nltk.stem import WordNetLemmatizer
 
