@@ -53,7 +53,8 @@ class LSTMClassifier:
     def load(name):
         with open(f'{name}.pickle', 'rb') as f:
             params = pickle.load(f)
-            parser = Hyper(*params)
+            words, embeds_dim, embeds, hidden_size, projection_size, target_size = params
+            parser = LSTMClassifier(words, embeds, embeds_dim, hidden_size, projection_size, target_size)
             parser.model.populate(f'{name}.model')
             return parser
 

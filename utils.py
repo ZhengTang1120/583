@@ -4,6 +4,13 @@ import re
 import numpy as np
 import math
 
+from nltk.stem import PorterStemmer 
+from nltk.stem import WordNetLemmatizer
+
+lemmatizer = WordNetLemmatizer() 
+
+ps = PorterStemmer()
+
 class Lang:
     def __init__(self, name):
         self.name = name
@@ -27,6 +34,8 @@ class Lang:
 
 def sanitizeWord(w):
     w = w.lower()
+    # w = lemmatizer.lemmatize(w)
+    w = ps.stem(w)
     if is_number(w):
         return "xnumx"
     w = re.sub("[^a-z_]+","",w)

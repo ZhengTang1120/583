@@ -34,4 +34,4 @@ if __name__ == '__main__':
             res = np.array([pls[i]==gls[i] for i in range(len(pls))])
             acc = float(np.sum(res)/len(gls))
             print ("Accuracy: %2f"%acc)
-            classifier.save("model_dy%d.model"%i)
+            classifier.save("model_dy2%d.model"%i)
